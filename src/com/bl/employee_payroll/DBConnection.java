@@ -8,7 +8,7 @@ public class DBConnection {
     private static String url = "jdbc:mysql://localhost:3306/payroll_service";
     private static String dbUserName = "root";
     private static String dbPass = "Deed747558@";
-    public static Connection getConnection(){
+    public Connection getConnection(){
         try{
             //1. load driver class
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -19,5 +19,20 @@ public class DBConnection {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private static DBConnection dbConnection = null;
+    DBConnection()
+    {
+    }
+
+    // Static method
+    // Static method to create instance of Singleton class
+    public static DBConnection getInstance()
+    {
+        if (dbConnection == null)
+            dbConnection = new DBConnection();
+
+        return dbConnection;
     }
 }

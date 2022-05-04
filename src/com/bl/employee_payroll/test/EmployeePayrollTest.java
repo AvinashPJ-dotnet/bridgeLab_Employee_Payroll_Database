@@ -11,4 +11,10 @@ public class EmployeePayrollTest {
         int count = employee_payroll_repository.updateEmployeePayroll("salary", 3000000,5);
         Assertions.assertEquals(1,count);
     }
+
+    @Test
+    public void givenName_GetSpecificResult_ReturnData(){
+        Employee_Payroll_Repository employee_payroll_repository = new Employee_Payroll_Repository();
+        employee_payroll_repository.retrieveDataByName("Terissa");
+    }
 }
