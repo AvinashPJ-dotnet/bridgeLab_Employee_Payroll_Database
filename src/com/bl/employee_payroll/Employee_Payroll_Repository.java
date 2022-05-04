@@ -41,15 +41,16 @@ public class Employee_Payroll_Repository {
         }
     }
 
-    public int updateEmployeePayroll(String colName, String updateValue, int id) {
+    public int updateEmployeePayroll(String colName, long updateValue, int id) {
         int count = 0;
         try {
             Connection con = DBConnection.getConnection();
-            String updateQuery = "update employee_payroll set "+ colName + " = " + updateValue + " where id =" +id ;
+            String updateQuery = "update employee_payroll set "+ colName +"=? where id = ?;" ;
             assert con != null;
-            Statement stmt = con.createStatement();
-            count = stmt.executeUpdate(updateQuery);
-
+            PreparedStatement stmt = con.prepareStatement(updateQuery);
+            stmt.setLong(1,updateValue);
+            stmt.setLong(2,id);
+            count = stmt.executeUpdate();
         }catch (SQLException e){
             System.out.println(e);
         }
