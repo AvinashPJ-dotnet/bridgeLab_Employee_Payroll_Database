@@ -6,9 +6,17 @@ public class Employee_Payroll_Repository {
     //DQL: select -> executeQuery();
     static String selectQuery = "select * from employee_payroll;";
     //DML->executeUpdate()
-
-    public static void main(String[] args) {
+    public void start() {
         try {
+            retrieveAllData();
+
+        }catch (NullPointerException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void retrieveAllData(){
+        try{
             Connection con = DBConnection.getConnection();
             assert con != null;
             Statement stmt = con.createStatement();
@@ -28,8 +36,23 @@ public class Employee_Payroll_Repository {
             con.close();
 
             System.out.println("Done!!!");
-        }catch (SQLException | NullPointerException e) {
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int updateEmployeePayroll(String colName, String updateValue, int id) {
+        int count = 0;
+        try {
+            Connection con = DBConnection.getConnection();
+            String updateQuery = "update employee_payroll set "+ colName + " = " + updateValue + " where id =" +id ;
+            assert con != null;
+            Statement stmt = con.createStatement();
+            count = stmt.executeUpdate(updateQuery);
+
+        }catch (SQLException e){
             System.out.println(e);
         }
+        return count;
     }
 }
