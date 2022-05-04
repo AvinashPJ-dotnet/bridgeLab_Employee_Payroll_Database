@@ -59,6 +59,22 @@ public class Employee_Payroll_Repository {
         }
     }
 
+    public void retrieveDataByDate(String dateFrom, String dateTo){
+        try{
+            dbConnection = DBConnection.getInstance();
+            Connection con = dbConnection.getConnection();
+            assert con != null;
+            PreparedStatement stmt = con.prepareStatement("select * from employee_payroll where start_date between cast(? as Date) and cast(? as Date);");
+            stmt.setDate(1, Date.valueOf(dateFrom));
+            stmt.setDate(2, Date.valueOf(dateTo));
+            ResultSet rs = stmt.executeQuery();
+
+            displayData(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void displayData(ResultSet rs) {
         try{
             System.out.println("id | name | gender | salary | start date | phone | address");

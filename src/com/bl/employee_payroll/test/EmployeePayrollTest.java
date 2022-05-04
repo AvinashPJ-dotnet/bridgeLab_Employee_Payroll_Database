@@ -17,4 +17,10 @@ public class EmployeePayrollTest {
         Employee_Payroll_Repository employee_payroll_repository = new Employee_Payroll_Repository();
         employee_payroll_repository.retrieveDataByName("Terissa");
     }
+
+    @Test
+    public void givenRangeOfDate_GetSpecificResult_ReturnData(){
+        Employee_Payroll_Repository employee_payroll_repository = new Employee_Payroll_Repository();
+        employee_payroll_repository.retrieveDataByDate("2022-05-02" , "2022-05-03");
+    }
 }
