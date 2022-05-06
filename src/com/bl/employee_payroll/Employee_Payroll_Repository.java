@@ -59,8 +59,8 @@ public class Employee_Payroll_Repository {
         }
     }
 
-    public void retrieveDataByDate(String dateFrom, String dateTo){
-        try{
+    public void retrieveDataByDate(String dateFrom, String dateTo) {
+        try {
             dbConnection = DBConnection.getInstance();
             Connection con = dbConnection.getConnection();
             assert con != null;
@@ -70,6 +70,37 @@ public class Employee_Payroll_Repository {
             ResultSet rs = stmt.executeQuery();
 
             displayData(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getCalculatedData(String gender){
+        try{
+            dbConnection = DBConnection.getInstance();
+            Connection con = dbConnection.getConnection();
+            assert con != null;
+            PreparedStatement stmt = con.prepareStatement("select " +
+                    "max(salary)," +
+                    "min(salary)," +
+                    "avg(salary)," +
+                    "count(salary)," +
+                    "sum(salary) as Sum from employee_payroll where gender = ? group by gender;");
+            stmt.setString(1, gender);
+            ResultSet rs =stmt.executeQuery();
+            while (rs.next()) {
+                System.out.println("Max Salary");
+                System.out.println(rs.getInt(1));
+                System.out.println("Min Salary");
+                System.out.println(rs.getInt(2));
+                System.out.println("Avg Salary");
+                System.out.println(rs.getInt(3));
+                System.out.println("Count Salary");
+                System.out.println(rs.getInt(4));
+                System.out.println("Sum Salary");
+                System.out.println(rs.getInt(5));
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
